@@ -7,7 +7,7 @@ const { Title } = Typography;
 
 function videoUploadPage(){
 
-    useStateuseStateuseState
+    const [state, setstate] = useState(initialState);
 
 
     return (
