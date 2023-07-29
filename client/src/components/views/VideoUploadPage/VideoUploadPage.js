@@ -2,14 +2,42 @@ import React, { useState } from "react";
 import { Typography, Button, Form, message, Input, Icon } from 'antd';
 import DropZone from 'react-dropzone';
 
-const { textArea } = Input;
+const { TextArea } = Input;
 const { Title } = Typography;
 
-function videoUploadPage(){
+const PrivateOptions = [
+    { value : 0, label :  "Private" },
+    { value : 1, label :  "Public" }
+]
 
-    const [state, setstate] = useState(initialState);
+const CategoryOptions = [
+    { value: 0, label: "Film & Animation1" },
+    { value: 1, label: "Film & Animation2" },
+    { value: 2, label: "Film & Animation3" },
+    { value: 3, label: "Film & Animation4" }
 
+]
 
+function VideoUploadPage(){
+
+    const [VideoTitle, setVideoTitle] = useState("");
+    const [Discription, seDiscription] = useState("");
+    const [Private, sePrivate] = useState(0);
+    const [Category, setCategory] = useState("Film & Animation");
+
+    const onTitleChange = (e) => {
+        setVideoTitle(e.currentTarget.value)
+    }
+    const onDescriptionChange = (e) => {
+        seDiscription(e.currentTarget.value)
+    }
+    const onPrivateChange = (e) => {
+        sePrivate(e.currentTarget.value)
+    }
+    const onCategoryChange = (e) => {
+        setCategory(e.currentTarget.value)
+    }
+    
     return (
         <div style={{ maxWidth:'700px', margin:'2rem auto' }}>
             <div style={{ textAlign:'center', marginBottom:'2rem' }}>
@@ -45,26 +73,36 @@ function videoUploadPage(){
                 <br />
 
                 <label>제목</label>
-                <Input onChange value />
+                <Input
+                    onChange={onTitleChange}
+                    value={VideoTitle}
+                />
 
                 <br />
                 <br />
 
                 <label>설명</label>
-                <Input onChange value />
+                <TextArea
+                    onChange={ onDescriptionChange}
+                    value={Discription}
+                />
 
                 <br />
                 <br />
 
-                <select onChange>
-                    <option></option>
+                <select onChange={ onPrivateChange }>
+                    {PrivateOptions.map((item, index) => (
+                        <option key={index} value={item.value}>{item.label} </option>
+                    ))}
                 </select>
 
                 <br />
                 <br />
 
-                <select onChange>
-                    <option></option>
+                <select onChange={  onCategoryChange }>
+                    {CategoryOptions.map((item, index) => (
+                        <option key={index} value={item.value}>{item.label} </option>
+                    ))}
                 </select>
 
                 <br />
@@ -78,4 +116,4 @@ function videoUploadPage(){
     )
 }
 
-export default videoUploadPage
+export default VideoUploadPage
