@@ -1,11 +1,13 @@
-import React from "react";
-import {Typography, Button, Form, message, Input, Icon} from 'antd';
+import React, { useState } from "react";
+import { Typography, Button, Form, message, Input, Icon } from 'antd';
 import DropZone from 'react-dropzone';
+
 const { textArea } = Input;
 const { Title } = Typography;
 
 function videoUploadPage(){
 
+    useStateuseStateuseState
 
 
     return (
