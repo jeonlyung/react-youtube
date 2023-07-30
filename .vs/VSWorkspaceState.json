@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\views",
+    "\\client\\src\\_reducers",
+    "\\server",
+    "\\server\\middleware",
+    "\\server\\routes",
+    "\\uploads"
+  ],
+  "SelectedNode": "\\server",
+  "PreviewInSolutionExplorer": false
+}
