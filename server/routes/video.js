@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-/*
-const { User } = require("../models/Video");
-const { auth } = require("../middleware/auth");
-*/
+const { Video } = require("../models/Video");
+const { Auth } = require("../middleware/auth");
 //파일 저장 라이브러리
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
@@ -58,21 +56,48 @@ router.post('/uploadfiles', (req, res) => {
 router.post('/thumbnail', (req, res) => {
 
     //썸네일 생성하고 비디오 러닝타임도 가져오기
+
+    //비디오 정보 가져오기
+    ffmpeg.ffprobe(req.body.url, function (err, metadata) {
+        console.dir(metadata);
+        console.log(metadata.format.duration);
+
+        fileDuration = metadata.format.duration;
+    });
+
+    //썸네일 생성
     ffmpeg(req.body.url)
         .on('filenames', function (filenames) {
             console.log(filenames);
 
-            filePath = "upload/thumbnails/" + filenames[0];
+            filePath = "uploads/thumbnails/" + filenames[0];
         })
         .on('end', function () {
             console.log("Sccrennshot taken");
-            return res.json({ success: true, url: filePath, fileName: filenames });
+            return res.json({ success: true, url: filePath, fileDuration: fileDuration });
         })
         .on('error', function (err) {
             console.error(err);
             return res.json({ success: false, err });
         })
+        .screenshot({
+            count: 3,
+            folder: 'uploads/thumbnails',
+            size: '320x240',
+            filename:'thumbnail-%b.png'
+        })
 })
 
+//비디오 업로드 정보들을 저장
+router.post('/uploadVideo', (req, res) => {
+
+    //비디오 정보들을 저장한다.
+    const video = new Video(req.body);
+    video.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+
+        res.status(200).json({ success: true });
+    })
+})
 
 module.exports = router;

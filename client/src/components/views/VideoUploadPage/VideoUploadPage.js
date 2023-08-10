@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Typography, Button, Form, message, Input, Icon } from 'antd';
 import DropZone from 'react-dropzone';
 import Axios from 'axios';
+import { useSelector } from "react-redux";
 
 const { TextArea } = Input;
 const { Title } = Typography;
@@ -19,18 +20,21 @@ const CategoryOptions = [
 
 ]
 
-function VideoUploadPage(){
-
+function VideoUploadPage(props){
+    const user = useSelector(state => state.user);
     const [VideoTitle, setVideoTitle] = useState("");
-    const [Discription, seDiscription] = useState("");
+    const [Description, setDescription] = useState("");
     const [Private, sePrivate] = useState(0);
     const [Category, setCategory] = useState("Film & Animation");
+    const [FilePath, setFilePath] = useState("");
+    const [Duration, setDuration] = useState("");
+    const [ThumbnailPath, setThumbnailPath] = useState("");
 
     const onTitleChange = (e) => {
         setVideoTitle(e.currentTarget.value)
     }
     const onDescriptionChange = (e) => {
-        seDiscription(e.currentTarget.value)
+        setDescription(e.currentTarget.value)
     }
     const onPrivateChange = (e) => {
         sePrivate(e.currentTarget.value)
@@ -57,10 +61,16 @@ function VideoUploadPage(){
                         fileName: response.data.fileName
                     }
 
+                    setFilePath(response.data.url);
+
                     //썸네일 생성
                     Axios.post('/api/video/thumbnail', variable)
                         .then(response => {
                             if (response.data.success) {
+                                console.log("썸네일 : ", response.data);
+
+                                setDuration(response.data.fileDuration);
+                                setThumbnailPath(response.data.url);
 
                             } else {
                                 alert("썸네일 생성에 실패하였습니다.");
@@ -80,13 +90,42 @@ function VideoUploadPage(){
 
     }
 
+    const onSubmit = (e) => {
+        //이벤트 방지
+        e.preventDefault();
+
+        const variables = {
+            writer: user.userData._id,
+            title: VideoTitle,
+            description: Description,
+            privacy: Private,
+            filePath: FilePath,
+            category: Category,
+            duration: Duration,
+            thumbnail: ThumbnailPath
+        }
+
+        Axios.post('/api/video/uploadVideo', variables)
+            .then(response => {
+                if (response.data.success) {
+                    message.success('업로드를 성공하였습니다.');
+                    setTimeout(() => {
+                        props.history.push('/');
+                    }, 2000);
+                } else {
+                    alert("비디오 업로드 저장에 실패하였습니다.");
+                }
+            })
+
+    }
+
     return (
         <div style={{ maxWidth:'700px', margin:'2rem auto' }}>
             <div style={{ textAlign:'center', marginBottom:'2rem' }}>
                 <Title level={2}>비디오 업로드</Title>
             </div>
 
-            <Form>
+            <Form onSubmit={onSubmit} >
                 <div style={{ display:'flex', justifyContent:'space-between' }}>
                     {/* 드랍존 */}
                     <DropZone
@@ -106,11 +145,12 @@ function VideoUploadPage(){
                    )}
                    </DropZone>
 
-
                     {/* 썸네일 */}
-                    <div>
-                        <img />
-                    </div>
+                    {ThumbnailPath && //ThumbnailPath가 있을 경우에만
+                        <div>
+                            <img src={`http://localhost:5000/${ThumbnailPath}`} alt="thumbnail" />
+                        </div>
+                    }
                 </div>
 
                 <br />
@@ -127,8 +167,8 @@ function VideoUploadPage(){
 
                 <label>설명</label>
                 <TextArea
-                    onChange={ onDescriptionChange}
-                    value={Discription}
+                    onChange={onDescriptionChange}
+                    value={Description}
                 />
 
                 <br />
@@ -152,7 +192,7 @@ function VideoUploadPage(){
                 <br />
                 <br />
 
-                <Button type="primary" size="large">
+                <Button type="primary" size="large" onClick={onSubmit}>
                     저장하기
                 </Button>
             </Form>
