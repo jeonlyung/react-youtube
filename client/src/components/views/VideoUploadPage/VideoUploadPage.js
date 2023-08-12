@@ -183,7 +183,7 @@ function VideoUploadPage(props){
                 <br />
                 <br />
 
-                <select onChange={  onCategoryChange }>
+                <select onChange={ onCategoryChange }>
                     {CategoryOptions.map((item, index) => (
                         <option key={index} value={item.value}>{item.label} </option>
                     ))}
