@@ -19,7 +19,7 @@ function App() {
       <NavBar />
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
-           /* null : 아무나 false : 로그인한 사람은 이동X true : 로그인한 사람만 이동 */
+           {/*null : 아무나 false : 로그인한 사람은 이동X true : 로그인한 사람만 이동 */}
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
