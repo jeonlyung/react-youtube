@@ -8,7 +8,7 @@ const { Meta } = Card;
 
 function LandingPage() {
 
-    const [Video, setVideo] = useState([])
+    const [Video, setVideo] = useState([]);
 
     //useEffect => DOM Road되자마자 무엇을 할것인지 설정(두번째 인자가 비어있을 경우 한번만 실행)
     useEffect(() => {
@@ -28,26 +28,26 @@ function LandingPage() {
         var seconds = Math.floor((video.duration - minutes * 60));
 
         return <Col key={index} lg={6} md={8} xs={24}>
-                    <a href={`/video/post/${video._id}`}>
-                        <div style={{ position: 'relative' }}>
+                  <div style={{ position: 'relative' }}>
+                    <a href={`/video/${video._id}`}>
                             <img style={{ width: '100%' }} src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
                             <div className="duration">
                                 <span>{minutes} : {seconds}</span>
                             </div>
-                        </div>
                     </a>
-                    <br />
+                   </div>
+                   <br />
 
-                    <Meta
+                   <Meta
                         avatar={
                             <Avatar src={video.writer.image} />
                         }
                         title={video.title}
                         description=""
-                    />
-                    <span>{video.writer.name}</span>
-                    <br />
-                    <span style={{ marginLeft: '3rem' }}>{video.views} views</span> - <span>{moment(video.createAdt).format("MMM Do YY")}</span>
+                   />
+                   <span>{video.writer.name}</span>
+                   <br />
+                   <span style={{ marginLeft: '3rem' }}>{video.views} views</span> - <span>{moment(video.createAdt).format("MMM Do YY")}</span>
                 </Col >
     })
 

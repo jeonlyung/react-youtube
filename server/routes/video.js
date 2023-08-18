@@ -52,7 +52,6 @@ router.post('/uploadfiles', (req, res) => {
     })
 })
 
-
 //비디오 데이터를 DB에서 가져와서 클라이언트에 보낸다.
 router.get('/getVideos', (req, res) => {
 
@@ -60,12 +59,25 @@ router.get('/getVideos', (req, res) => {
     Video.find()
         .populate('writer')
         .exec((err, videos) => {
-            if (err) { return res.status(400).send(err) }
+            if (err) { return res.status(400).send(err) };
 
             res.status(200).json({ success: true, videos });
         })
-        
+})
+
+//비디오 상세 데이터를 DB에서 가져와서 클라이언트에 보낸다.
+router.post('/getVideoDetail', (req, res) => {
+
+    //비디오 상세 데이터를 DB에서 가져와서 클라이언트에 보낸다.
+    Video.findOne({ "_id": req.body.videoId })
+        .populate('writer')
+        .exec((err, videoDetail) => {
+            if (err) { return res.status(400).send(err) };
+
+            return res.status(200).json({ success: true, videoDetail });
+        })
     
+        
 })
 
 
