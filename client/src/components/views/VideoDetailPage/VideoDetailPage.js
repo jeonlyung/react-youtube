@@ -1,6 +1,8 @@
 import React, { useEffect, useState} from "react";
 import { Row, Col, List, Avatar } from 'antd';
 import Axios from 'axios';
+//사이드 템플릿 Import
+import SideVideo from './SideVideo';
 
 function VideoDetailPage(props) {
 
@@ -30,7 +32,7 @@ function VideoDetailPage(props) {
                     <div style={{ width: '100%', padding: '3rem 4rem' }}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
 
-                        <List.Item action>
+                        <List.Item>
                             <List.Item.Meta
                                 /*avatar : 유저의 이미지*/
                                 avatar={<Avatar src={VideoDetail.writer.image} />}
@@ -43,7 +45,7 @@ function VideoDetailPage(props) {
                 </Col>
 
                 <Col lg={6} xs={24}>
-                    Side Videos
+                    <SideVideo />
                 </Col>
             </Row>
 
