@@ -15,7 +15,7 @@ function VideoDetailPage(props) {
         Axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
                 if (response.data.success) {
-                    setVideoDetail(response.data.VideoDetail);
+                    setVideoDetail(response.data.videoDetail);
                 } else {
                     alert("비디오 정보를 가져오기를 실패하였습니다.");
                 }
@@ -30,19 +30,17 @@ function VideoDetailPage(props) {
                     <div style={{ width: '100%', padding: '3rem 4rem' }}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
 
-                        <List.Item actions>
-                            {/*avatar : 유저의 이미지*/}
-                            avatar={<Avatar src={VideoDetail.writer.image} />}
-                            title={VideoDetail.writer.name}
-                            description={VideoDetail.description}
+                        <List.Item action>
+                            <List.Item.Meta
+                                /*avatar : 유저의 이미지*/
+                                avatar={<Avatar src={VideoDetail.writer.image} />}
+                                title={VideoDetail.writer.name}
+                                description={VideoDetail.description}
+                            />
+                         
                         </List.Item>
-
                     </div>
-
-
-
                 </Col>
-
 
                 <Col lg={6} xs={24}>
                     Side Videos
@@ -51,8 +49,10 @@ function VideoDetailPage(props) {
 
         )
     } else {
+        return (
+            <div>...Loading</div>
+        )
     }
-
     
 }
 
