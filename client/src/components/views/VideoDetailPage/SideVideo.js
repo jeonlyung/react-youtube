@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 
@@ -19,7 +20,7 @@ function SideVideo() {
                 </div>
 
                 <div style={{ width: '50%', height:'100%' }}>
-                    <a href style={{ color: 'gray' }}>
+                    <a href="true" style={{ color: 'gray' }}>
                         <span style={{ fontSize: '1rem', color: 'black' }}>{video.title}</span><br />
                         <span>{video.writer.name}</span><br />
                         <span>{video.views} views</span><br />

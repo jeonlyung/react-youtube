@@ -22,7 +22,7 @@ function VideoDetailPage(props) {
                     alert("비디오 정보를 가져오기를 실패하였습니다.");
                 }
             })
-    }, [variable]);
+    }, []);
 
     /*VideoDetail.writer.image null 에러 => DOM랜더링 전에 image 불러와서 에러 발생 => 처리*/
     if (VideoDetail.writer) {

@@ -6,12 +6,20 @@ function Subscribe(props) {
     const [SubscribeNumber, setSubscribeNumber] = useState([]);
     const [Subscribed, setSubscribed] = useState([]);
 
+   
+    let variable = {
+        userTo: props.userTo
+    };
+
+    
+    let subscribedVariable = {
+        userTo: props.userTo
+      , userFrom: localStorage.getItem('userId')
+    };
+
     useEffect(() => {
 
-        //구독자 수 조회
-        let variable = {
-            userTo: props.userTo
-        };
+         //구독자 수 조회
         Axios.post('/api/subscribe/subscribeNumber', variable)
             .then(response => {
                 if (response.data.success) {
@@ -21,14 +29,8 @@ function Subscribe(props) {
                     alert('구독자 수 정보를 가져오지 못하였습니다.');
                 }
             })
-
-            
+      
         //구독 여부 조회
-        let subscribedVariable = {
-            userTo: props.userTo
-          , userFrom: localStorage.getItem('userId')
-        };
-
         Axios.post('/api/subscribe/subscribed', subscribedVariable)
             .then(response => {
                 if (response.data.success) {

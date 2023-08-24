@@ -3,14 +3,16 @@ const router = express.Router();
 
 const { Subscriber } = require("../models/Subscriber")
 
+
 //=================================
 //             Subscribe
 //=================================
 
+
 //±¸µ¶ÀÚ¼ö Á¶È¸ÇÏ±â
 router.post('/subscribeNumber', (req, res) => {
 
-    Subscriber.find({ 'userTo': req.body.userTo })
+    Subscriber.find({ userTo: req.body.userTo })
         .exec((err, subscribe) => {
             if (err) return res.status(400).send(err);
 
@@ -22,7 +24,7 @@ router.post('/subscribeNumber', (req, res) => {
 //±¸µ¶ ¿©ºÎ Á¶È¸ÇÏ±â
 router.post('/subscribed', (req, res) => {
 
-    Subscriber.find({ 'userTo': req.body.userTo, 'userFrom': req.body.userFrom })
+    Subscriber.find({ userTo: req.body.userTo, userFrom: req.body.userFrom })
         .exec((err, subscribe) => {
             if (err) return res.status(400).send(err);
 
