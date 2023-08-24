@@ -9,7 +9,9 @@ function Subscribe(props) {
     useEffect(() => {
 
         //구독자 수 조회
-        let variable = { userTo: props.userTo };
+        let variable = {
+            userTo: props.userTo
+        };
         Axios.post('/api/subscribe/subscribeNumber', variable)
             .then(response => {
                 if (response.data.success) {
@@ -22,7 +24,11 @@ function Subscribe(props) {
 
             
         //구독 여부 조회
-        let subscribedVariable = { userTo: props.userTo, userFrom: localStorage.getItem('userId')};
+        let subscribedVariable = {
+            userTo: props.userTo
+          , userFrom: localStorage.getItem('userId')
+        };
+
         Axios.post('/api/subscribe/subscribed', subscribedVariable)
             .then(response => {
                 if (response.data.success) {
@@ -34,11 +40,46 @@ function Subscribe(props) {
             })
     }, []);
 
+    const onSubscribe = () => {
+
+        let subscribeVariable = {
+            userTo: props.userTo
+          , userFrom: props.userFrom
+        }
+
+        //이미 구독 중이라면
+        if (Subscribed) {
+            Axios.post('/api/subscribe/unSubscribe', subscribeVariable)
+                .then(response => {
+                    if (response.data.success) {
+                        setSubscribeNumber(SubscribeNumber - 1);
+                        setSubscribed(!Subscribed);
+                    } else {
+                        alert("구독 취소 실패하였습니다.");
+                    }
+                })
+        //아직 구독 중이지 아닌 상태
+        } else {
+            Axios.post('/api/subscribe/subscribe', subscribeVariable)
+                .then(response => {
+                    if (response.data.success) {
+                        setSubscribeNumber(SubscribeNumber + 1);
+                        setSubscribed(!Subscribed);
+                    } else {
+                        alert("구독하는데 실패하였습니다.");
+                    }
+                })
+        }
+    }
+
     return (
         <div>
-            <button style={{
-                backgroundColor: `${Subscribe ? '#CC0000' : '#AAAAAA'}`, borderRadius: '4px', color: 'white',
-                        padding: '10px 16px', fontWeight: '500', fontSize: '1rem', textTransform: 'uppercase'}}
+            <button
+                style={{
+                    backgroundColor: `${Subscribed ? '#CC0000' : '#AAAAAA'}`, borderRadius: '4px', color: 'white',
+                    padding: '10px 16px', fontWeight: '500', fontSize: '1rem', textTransform: 'uppercase'
+                }}
+                onClick={onSubscribe }
             >
                 {SubscribeNumber} {Subscribed ? 'Subscribed' : 'Subscribe'}
             </button>
