@@ -26,15 +26,18 @@ function VideoDetailPage(props) {
 
     /*VideoDetail.writer.image null 에러 => DOM랜더링 전에 image 불러와서 에러 발생 => 처리*/
     if (VideoDetail.writer) {
+
+        //등록자와 유저가 다르면 구독버튼 보이도록 설정
+        const subscribeButton = VideoDetail.writer._id !== localStorage.getItem("userId") && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem("userId")} />;
+
         return (
             <Row gutter={[16,16]}>
                 <Col lg={18} xs={24}>
                     <div style={{ width: '100%', padding: '3rem 4rem' }}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
 
-                        <List.Item
-                            actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem("userId")} />]}
-                        >
+                        <List.Item actions={[subscribeButton]}>
+
                             <List.Item.Meta
                                 /*avatar : 유저의 이미지*/
                                 avatar={<Avatar src={VideoDetail.writer.image} />}

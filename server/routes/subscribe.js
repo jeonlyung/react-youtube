@@ -51,12 +51,13 @@ router.post('/unSubscribe', (req, res) => {
 //구독 하기
 router.post('/subscribe', (req, res) => {
 
-    Subscriber.findOneAndDelete({ userTo: req.body.userTo, userFrom: req.body.userFrom })
-        .exec((err, doc) => {
-            if (err) return res.status(400).json({ success: false, err })
+    const subscribe = new Subscriber(req.body);
 
-            return res.status(200).json({ success: true, doc });
-        });
+    subscribe.save((err, doc) => {
+        if (err) return res.status(400).json({ success: false, err });
+
+        res.status(200).json({ success: true });
+    })
 })
 
 
