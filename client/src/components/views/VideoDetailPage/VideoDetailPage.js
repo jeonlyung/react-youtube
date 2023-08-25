@@ -4,6 +4,7 @@ import Axios from 'axios';
 //사이드 템플릿 Import
 import SideVideo from './SideVideo';
 import Subscribe from './Subscribe';
+import Comment from './Comment';
 function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId;
@@ -46,6 +47,10 @@ function VideoDetailPage(props) {
                             />
                          
                         </List.Item>
+
+                        {/*Comment*/}
+                        <Comment />
+
                     </div>
                 </Col>
 
