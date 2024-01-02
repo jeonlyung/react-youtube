@@ -1,16 +1,14 @@
 {
   "ExpandedNodes": [
-    "",
     "\\client",
     "\\client\\src",
     "\\client\\src\\components",
     "\\client\\src\\components\\views",
-    "\\client\\src\\components\\views\\LoginPage",
-    "\\client\\src\\components\\views\\RegisterPage",
+    "\\client\\src\\components\\views\\LandingPage",
+    "\\client\\src\\components\\views\\VideoDetailPage",
     "\\client\\src\\components\\views\\VideoUploadPage",
-    "\\uploads",
-    "\\uploads\\thumbnails"
+    "\\server",
+    "\\server\\models"
   ],
-  "SelectedNode": "\\client\\src\\index.js",
   "PreviewInSolutionExplorer": false
 }
