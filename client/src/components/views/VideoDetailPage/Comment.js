@@ -50,7 +50,7 @@ function Comment(props) {
                 <textarea style={{ width: '100%', borderRadius: '5px' }}
                     onChange={handleClick}
                     value={commentValue}
-                    placeholder="코멘트를 작성해 주세요."
+                    placeholder="Write Comment" //한글 깨짐 해결해야함
                 />
                 <br />
                 <button style={{ width: '20%', height: '52px' }} onClick={onSubmit} >Submit</button>
