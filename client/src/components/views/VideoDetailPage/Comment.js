@@ -8,7 +8,7 @@ function Comment(props) {
     const videoId = props.postId;
     //redux에서 user정보 가져오기
     const user = useSelector(state => state.user);
-    const [commentValue, setcommentValue] = useState("")
+    const [commentValue, setcommentValue] = useState("");
 
     const handleClick = (event) => {
         setcommentValue(event.currentTarget.value)
@@ -29,7 +29,7 @@ function Comment(props) {
                 if (response.data.success) {
                     console.log(response.data.result);
                 } else {
-                    console.log(response);
+                    console.log(response.data);
                 }
             })
         
